@@ -1,8 +1,13 @@
+import os
 import requests
 from dotenv import dotenv_values
 import time
 
-config = dotenv_values(".env")
+current_file_path = os.path.abspath(__file__)
+current_file_dir = os.path.dirname(current_file_path)
+
+config = dotenv_values(current_file_dir + "/.env")
+
 
 def main():
     data = {
