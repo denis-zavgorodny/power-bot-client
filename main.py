@@ -8,7 +8,11 @@ import time
 from urllib3.util.retry import Retry
 
 logger = logging.getLogger("power-bot-sensor")
-logging.basicConfig(filename="power-bot-sensor.log")
+logging.basicConfig(
+    filename="power-bot-sensor.log",
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 
 current_file_path = os.path.abspath(__file__)
 current_file_dir = os.path.dirname(current_file_path)
@@ -27,7 +31,7 @@ def main():
             "API-KEY": config.get("API_KEY")
         }
 
-        session = requests_session_with_retries(retries=3, backoff_factor=0.5)
+        session = requests_session_with_retries(retries=5, backoff_factor=0.5)
 
         response = session.post(config.get("PING_ENDPOINT"), json=data, headers=headers)
         response.raise_for_status()
